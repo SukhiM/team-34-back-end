@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {Employee} = require('./models');
+const {Task, Employee} = require('./models');
 
 //helper function
 const ash = require('express-asyne-handler');
@@ -8,8 +8,8 @@ const ash = require('express-asyne-handler');
 //returns all Employee Route
 
 router.get('/', ash(async (req, res)=> {
-   let employees = await Employee.findAll();
-   res.status(200).json(employees);
+   let tasks = await Task.findAll();
+   res.status(200).json(tasks);
 }));
 
 module.exports = router;
