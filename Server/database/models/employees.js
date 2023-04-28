@@ -21,5 +21,26 @@ const Employee = sequelize.define('Employee', {
 
 });
 
-module.exports = Employee;
+const Task = sequelize.define('Task', {
+    description: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+
+    priority: {
+        type: DataTypes.ENUM('low', 'medium', 'high'),
+        defaultValue: 'low'
+    },
+    status:{
+        type: DataTypes.ENUM('not started', 'completed'),
+        defaultValue: 'not started'
+    }
+});
+
+Task.belongsTo(Employee, {foreignKey: 'employeeId'});
+Employee.hasMany(Task, { foreignKey: 'employeeId'});
+
+module.exports = {Employee, Task};
+
+
 
