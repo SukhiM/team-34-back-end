@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const {Task, Employee} = require('../database/models');
-const {getAllEmployees} = require('..database/employeeControls')
 
 //helper function
 const ash = require('express-async-handler');
@@ -9,7 +8,8 @@ const ash = require('express-async-handler');
 //returns all Employee Route
 
 router.get('/', ash(async (req, res)=> {
-   let employees = await Employee.findAll();
+   let employees = await Employee.findAll({include: [Task]});
+   console.log(employees);
    res.status(200).json(employees);
 }));
 
