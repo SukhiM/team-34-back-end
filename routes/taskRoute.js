@@ -13,8 +13,8 @@ router.get('/', ash(async (req, res)=> {
 }));
 
 router.get('/:id', ash(async (req, res) => {
-   let task = await Task.findByPk(req.params.id);
-   res.status(200).json(course);
+   let tasks = await Task.findByPk(req.params.id, {include: [Employee]});
+   res.status(200).json(tasks);
 }));
 
 module.exports = router;
