@@ -85,6 +85,8 @@ const bootApp = async () => {
 
 bootApp();
 
+const port = process.env.PORT || 5001;
 
-const PORT = 5001;
-app.listen(PORT, console.log(`Server started on ${PORT}`));
+app.listen(port, () => {
+  console.log(`Server listening on port ${port}`);
+});
