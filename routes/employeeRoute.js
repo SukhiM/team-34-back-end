@@ -14,8 +14,8 @@ router.get('/', ash(async (req, res)=> {
 }));
 
 router.get('/:id', ash(async(req, res) => {
-   let employees = await Employee.findByPk(req.params.id, {include: [Task]});
-   res.status(200).json(employees);
+   let employee = await Employee.findByPk(req.params.id, {include: [Task]});
+   res.status(200).json(employee);
  }));
 
  // Get an employee and their tasks by id
@@ -28,28 +28,24 @@ router.get('/employees/:id', ash(async (req, res) => {
  }));
 
  // Create a new employee
-router.post('/employees', ash(async (req, res) => {
-   const { Fname, Lname, department } = req.body;
-   const employee = await Employee.create({ Fname, Lname, department });
-   res.status(201).json(employee);
+router.post('/create', ash(async (req, res) => {
+   let newEmployee = await Employee.create(req.body);
+   res.status(201).json(newEmployee);
  }));
  
  // Update an employee by id
- router.put('/employees/:id', ash(async (req, res) => {
-   const { Fname, Lname, department } = req.body;
-   const employee = await Employee.findByPk(req.params.id);
-   if (!employee) {
-     return res.status(404).json({ error: 'Employee not found' });
-   }
-   employee.Fname = Fname;
-   employee.Lname = Lname;
-   employee.department = department;
-   await employee.save();
-   res.status(200).json(employee);
+ router.put('/update/:id', ash(async (req, res) => {
+    await Employee.update(req.body, {
+      where: {
+        id: req.params.id
+      }
+    });
+    let employee = await Employee.findByPk(req.params.id, {include: [Task]});
+    res.status(201).json(employee);
  }));
  
  // Delete an employee by id
- router.delete('/employees/:id', ash(async (req, res) => {
+ router.delete('/delete/:id', ash(async (req, res) => {
    const employee = await Employee.findByPk(req.params.id);
    if (!employee) {
      return res.status(404).json({ error: 'Employee not found' });

@@ -50,7 +50,7 @@ const configureApp = async () => {
    // Mount apiRouter
    app.use("/api", apiRouter);
 
-
+  
   // Handle page not found:
   // gets triggered when a request is made to
   // an undefined route 
@@ -60,6 +60,7 @@ const configureApp = async () => {
     next(error);
   });
 
+ 
   // Error-handling middleware: 
   // all express errors get passed to this
   // when next(error) is called 
